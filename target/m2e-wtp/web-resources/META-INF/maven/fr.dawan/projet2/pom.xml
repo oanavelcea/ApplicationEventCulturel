@@ -8,14 +8,7 @@
 	<version>1.0</version>
 	<name>projet2</name>
 	<url>http://maven.apache.org</url>
-	<!-- git -->
-	<scm>
-		<url>https://github.com/mderkaoui/proj1.git</url>
-		<connection>scm:git:git://github.com/mderkaoui/proj1.git</connection>
-		<developerConnection>scm:git:git@github.com:mderkaoui/proj1.git</developerConnection>
-	</scm>
-
-
+	
 
 	<dependencies>
 		<dependency>
@@ -25,12 +18,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
-
+	
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>

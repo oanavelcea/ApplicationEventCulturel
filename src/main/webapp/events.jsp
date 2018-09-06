@@ -11,6 +11,9 @@
 			<th>Ville</th>
 			<th>Date de début</th>
 			<th>Date de fin</th>
+			<th>Timetable</th>
+			<th>UpdatedAt</th>
+			<th>Tags</th>
 		</tr>
 		<c:forEach var="evt" items="${events}">
 			<tr>
@@ -21,6 +24,17 @@
 				</td>
 				<td>
 					<fmt:formatDate value="${evt.dateEnd}" pattern="dd/MM/yyyy" />
+				</td>
+				<td>
+					<c:forEach var="tt" items="${evt.timeTable}">
+						<c:out value="${tt}" /><br />		
+					</c:forEach>
+				</td>
+				<td>${evt.updatedAt}</td>
+				<td>
+					<c:forEach var="tg" items="${evt.tags}">
+						<c:out value="${tg}" /><br />		
+					</c:forEach>
 				</td>
 			</tr>
 		</c:forEach>

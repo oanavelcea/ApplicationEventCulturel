@@ -50,10 +50,6 @@ public class JsonTools {
 			
 			JsonObject objRecord= jsonRecords.getJsonObject(i);
 			
-			//objR0Fields contient : 
-			//{"latlon":[50.683548,3.153565],
-			//"lang":"fr",
-			//"city":"Croix","uid":"15363992","placename":"Centre Culturel Jacques Brel","pricing_info":"Gratuit","image":"http://cibul.s3.amazonaws.com/event_quartier-saint-pierre-les-fetes-estivales_366148.jpg","date_start":"2017-07-27","updated_at":"2017-09-28T08:49:46+00:00","space_time_info":"du jeudi 27 juillet au jeudi 17 août à Centre Culturel Jacques Brel","department":"Nord","link":"http://openagenda.com/event/quartier-saint-pierre-les-fetes-estivales","title":"Quartier Saint Pierre - Les fêtes estivales","address":"rue Jean Baptiste Delescluse Croix","timetable":"2017-07-27T14:00:00 2017-07-27T15:00:00;2017-08-17T21:30:00 2017-08-17T22:30:00","image_thumb":"http://cibul.s3.amazonaws.com/evtbevent_quartier-saint-pierre-les-fetes-estivales_366148.jpg","region":"Hauts-de-France","date_end":"2017-08-17","tags":"saint pierre,croix","description":"Fêtes estivales"}
 			JsonObject objRFields = objRecord.getJsonObject("fields");
 			
 			JsonArray obj0LatLon = objRFields.getJsonArray("latlon");
@@ -61,11 +57,10 @@ public class JsonTools {
 			evt.setLongitude(Double.parseDouble(obj0LatLon.get(1).toString()));
 			
 			try {
-			evt.setTitle(objRFields.getString("title"));
+				evt.setTitle(objRFields.getString("title"));//"title":"Quartier Saint Pierre - Les fêtes estivales",
 			}catch(Exception ex) {
 				evt.setTitle("");
 			}
-			System.out.println("title = " + evt.getTitle());
 			
 			evt.setLang(objRFields.getString("lang"));
 			evt.setCity(objRFields.getString("city"));
@@ -75,7 +70,89 @@ public class JsonTools {
 			evt.setDateEnd(convertDates.parse(objRFields.getString("date_end")));
 			
 			//TODO : récupérer les autres champs
+			evt.setPlacename(objRFields.getString("placename"));
+			try {
+				evt.setUid(Integer.parseInt(objRFields.getString("uid")));
+			}catch(Exception ex) {
+				//uid = 0
+			}
+			try {
+				evt.setImage(objRFields.getString("image"));//"image":"http://cibul.s3.amazonaws.com/event_quartier-saint-pierre-les-fetes-estivales_366148.jpg",
+			}catch(Exception ex) {//absence d'image
+				evt.setImage("");
+			}
 			
+			evt.setSpaceTimeInfo(objRFields.getString("space_time_info"));//"space_time_info":"du jeudi 27 juillet au jeudi 17 août à Centre Culturel Jacques Brel",
+			
+			evt.setDepartment(objRFields.getString("department"));//"department":"Nord",
+			
+			evt.setLink(objRFields.getString("link"));//"link":"http://openagenda.com/event/quartier-saint-pierre-les-fetes-estivales",
+			
+			evt.setAddress(objRFields.getString("address"));//"address":"rue Jean Baptiste Delescluse Croix",
+			
+			evt.setRegion(objRFields.getString("region"));//"region":"Hauts-de-France",
+			
+			try {
+				evt.setImageThumb(objRFields.getString("image_thumb"));//"image_thumb":"http://cibul.s3.amazonaws.com/evtbevent_quartier-saint-pierre-les-fetes-estivales_366148.jpg",
+			}catch(Exception e) {//absence d'icone
+				evt.setImageThumb("");
+			}
+			
+			try {
+				evt.setDescription(objRFields.getString("description"));//"description":"Fêtes estivales"}
+			}catch(Exception e) {
+				evt.setDescription("");
+			}
+			//"tags":"saint pierre,croix",
+			//TODO vérifier NUllPointerException
+			try {
+				String tags = objRFields.getString("tags");
+				if(tags!=null && !tags.equals("")) {
+					String[] tagsArray = tags.split(",");
+					for(String sT : tagsArray) {
+						evt.getTags().add(sT);
+					}
+				}
+			}catch(Exception ex) {
+				//tags vides
+			}
+
+			
+			//"updated_at":"2017-09-28T08:49:46+00:00",
+			SimpleDateFormat sdfUpdated = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+			try {
+				evt.setUpdatedAt(sdfUpdated.parse(objRFields.getString("updated_at")));	
+			} catch (Exception e) {
+				evt.setUpdatedAt(null);
+			}
+			
+			//"timetable":"2017-07-27T14:00:00 2017-07-27T15:00:00;2017-08-17T21:30:00 2017-08-17T22:30:00",
+			SimpleDateFormat sdfTimeTable = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+			SimpleDateFormat sdfTimeTableNEW = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+			String timetable = objRFields.getString("timetable");
+			if(timetable!=null && !timetable.equals("")) {
+				String[] timetableArray = timetable.split(";");
+				for(String sT : timetableArray) {
+					//sT = 2017-07-27T14:00:00 2017-07-27T15:00:00
+					String[] oneTTArray = sT.split(" ");
+					String startDateTT = "";
+					String endDateTT = "";
+					try {
+						startDateTT = sdfTimeTableNEW.format(sdfTimeTable.parse(oneTTArray[0]));
+					} catch (Exception e) {	
+						
+					}
+					try {
+						endDateTT = sdfTimeTableNEW.format(sdfTimeTable.parse(oneTTArray[1]));
+					} catch (Exception e) {	
+						
+					}
+					//27/07/2017 14:00:00 - 27/07/2017 15:00:00
+					evt.getTimeTable().add(startDateTT + " - " + endDateTT);
+				}
+			}
+			
+
 			evtList.add(evt);
 		}
 		

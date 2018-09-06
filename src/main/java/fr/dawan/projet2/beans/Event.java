@@ -17,13 +17,13 @@ public class Event implements Serializable{
 	private String image;
 	private Date dateStart;
 	private Date updatedAt;
-	private String space_time_info;
+	private String spaceTimeInfo;
 	private String department;
 	private String link;
 	private String title;
 	private String address;
-	private List<Date> timetable;
-	private String image_thumb;
+	private List<String> timeTable;
+	private String imageThumb;
 	private String region;
 	private Date dateEnd;
 	private List<String> tags;
@@ -31,7 +31,7 @@ public class Event implements Serializable{
 	
 	public Event() {
 		tags = new ArrayList<String>();
-		timetable = new ArrayList<Date>();
+		timeTable = new ArrayList<String>();
 	}
 
 	public double getLatitude() {
@@ -114,14 +114,6 @@ public class Event implements Serializable{
 		this.updatedAt = updatedAt;
 	}
 
-	public String getSpace_time_info() {
-		return space_time_info;
-	}
-
-	public void setSpace_time_info(String space_time_info) {
-		this.space_time_info = space_time_info;
-	}
-
 	public String getDepartment() {
 		return department;
 	}
@@ -154,22 +146,15 @@ public class Event implements Serializable{
 		this.address = address;
 	}
 
-	public List<Date> getTimetable() {
-		return timetable;
+	public List<String> getTimeTable() {
+		return timeTable;
 	}
 
-	public void setTimetable(List<Date> timetable) {
-		this.timetable = timetable;
+	public void setTimeTable(List<String> timetable) {
+		this.timeTable = timetable;
 	}
 
-	public String getImage_thumb() {
-		return image_thumb;
-	}
-
-	public void setImage_thumb(String image_thumb) {
-		this.image_thumb = image_thumb;
-	}
-
+	
 	public String getRegion() {
 		return region;
 	}
@@ -200,6 +185,22 @@ public class Event implements Serializable{
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getSpaceTimeInfo() {
+		return spaceTimeInfo;
+	}
+
+	public void setSpaceTimeInfo(String spaceTimeInfo) {
+		this.spaceTimeInfo = spaceTimeInfo;
+	}
+
+	public String getImageThumb() {
+		return imageThumb;
+	}
+
+	public void setImageThumb(String imageThumb) {
+		this.imageThumb = imageThumb;
 	}
 	
 	
