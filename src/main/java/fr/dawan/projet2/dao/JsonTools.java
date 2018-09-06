@@ -20,6 +20,7 @@ import fr.dawan.projet2.beans.Event;
 
 public class JsonTools {
 
+	//test commit
 	public static List<Event> importAllEventsFromJson() throws Exception {
 		String link = "https://opendata.lillemetropole.fr/api/records/1.0/search/?dataset=evenements-publics-openagenda&facet=tags&facet=placename&facet=department&facet=region&facet=city&facet=date_start&facet=date_end&facet=pricing_info&facet=updated_at&facet=city_district";
 
