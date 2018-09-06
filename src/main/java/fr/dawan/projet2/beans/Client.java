@@ -9,7 +9,7 @@ import fr.dawan.projet2.beans.Event;
 public class Client extends User {
 	private String address;
 	private LocalDate dateOfBirth;
-	private List<Event> events; //la liste d'evenements de l'agenda du client
+	private List<Event> eventsagenda; //la liste d'evenements de l'agenda du client
 
 	public Client() {
 		super();
@@ -39,16 +39,16 @@ public class Client extends User {
 	
 
 	public List<Event> getEvents() {
-		return events;
+		return eventsagenda;
 	}
 
 	public void setEvents(List<Event> events) {
-		this.events = events;
+		this.eventsagenda = events;
 	}
 
 	@Override
 	public String toString() {
-		return "Client [address=" + address + ", dateOfBirth=" + dateOfBirth + ", events=" + events + "]";
+		return "Client [address=" + address + ", dateOfBirth=" + dateOfBirth + ", events=" + eventsagenda + "]";
 	}
 
 
@@ -71,10 +71,10 @@ public class Client extends User {
 				return false;
 		} else if (!dateOfBirth.equals(other.dateOfBirth))
 			return false;
-		if (events == null) {
-			if (other.events != null)
+		if (eventsagenda == null) {
+			if (other.eventsagenda != null)
 				return false;
-		} else if (!events.equals(other.events))
+		} else if (!eventsagenda.equals(other.eventsagenda))
 			return false;
 		return true;
 	}
