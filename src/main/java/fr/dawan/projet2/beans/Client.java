@@ -3,12 +3,22 @@ package fr.dawan.projet2.beans;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 import fr.dawan.projet2.beans.Event;
-
+@Entity
+@Table(name = "client")
 public class Client extends User {
+	@Column(name = "address", length = 150, nullable = false)
 	private String address;
+	@Column(name = "dateOfBirth",nullable = false)
 	private LocalDate dateOfBirth;
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE }, fetch = FetchType.LAZY)
 	private List<Event> eventsagenda; //la liste d'evenements de l'agenda du client
 
 	public Client() {
@@ -20,7 +30,14 @@ public class Client extends User {
 		this.address = address;
 		this.dateOfBirth = dateOfBirth;
 	}
+//methode pour ajouter un event a l'agenda de l'utilisateur
+	public void addEvent(Event event) {
+		if(eventsagenda.contains(event)) {
+			eventsagenda.add(event);
+		}		
+		}
 
+	
 	public String getAddress() {
 		return address;
 	}

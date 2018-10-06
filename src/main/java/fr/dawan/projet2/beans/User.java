@@ -1,24 +1,43 @@
 package fr.dawan.projet2.beans;
 
+import static javax.persistence.EnumType.STRING;
+
 import java.io.Serializable;
 
-public class User implements Serializable {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+@Entity
+@Table(name = "user", uniqueConstraints=@UniqueConstraint(columnNames= {"lastName", "firstName", "sex", "email", "password"})) 
+@Inheritance(strategy=InheritanceType.JOINED) //A voir si cést bien Joined !!!
+public class User extends Record implements Serializable {
+	
+	@Column(name = "lastName", length = 55, nullable = false)
 	private String lastName;
-	private String firstName;
-	private char sex;
+	@Column(name = "firstName", length = 55, nullable = false)
+	private String firstName;	
+	@Enumerated(STRING)
+	private Genre genre;
+	@Column(name = "email", length = 100, nullable = false)
 	private String email;
+	@Column(name = "password", length = 55, nullable = false)
 	private String password;
-	private int id;
+	
 
 	public User() {
 
 	}
 
-	public User(String lastName, String firstName, char sex, String email, String password) {
+	public User(String lastName, String firstName, Genre genre, String email, String password) {
 		// super();
 		this.lastName = lastName;
 		this.firstName = firstName;
-		this.sex = sex;
+		this.genre = genre;
 		this.email = email;
 		this.password = password;
 	}
@@ -39,12 +58,12 @@ public class User implements Serializable {
 		this.firstName = firstName;
 	}
 
-	public char getSex() {
-		return sex;
+	public Genre getGenre() {
+		return genre;
 	}
 
-	public void setSex(char sex) {
-		this.sex = sex;
+	public void setGenre(char sex) {
+		this.genre = genre;
 	}
 
 	public String getEmail() {
@@ -63,54 +82,12 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	@Override
 	public String toString() {
-		return "User [lastName=" + lastName + ", firstName=" + firstName + ", sex=" + sex + ", email=" + email
-				+ ", password=" + password + ", id=" + id + "]";
+		return "User [lastName=" + lastName + ", firstName=" + firstName + ", genre=" + genre + ", email=" + email
+				+ ", password=" + password + "]";
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (firstName == null) {
-			if (other.firstName != null)
-				return false;
-		} else if (!firstName.equals(other.firstName))
-			return false;
-		if (id != other.id)
-			return false;
-		if (lastName == null) {
-			if (other.lastName != null)
-				return false;
-		} else if (!lastName.equals(other.lastName))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (sex != other.sex)
-			return false;
-		return true;
-	}
-
+	//besoin equals et hashcode?
 }

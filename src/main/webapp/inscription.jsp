@@ -17,7 +17,7 @@
 	<h1>Inscription</h1>
 	<form action="Inscription" method="post">
 		<input type="text" id="firstName" name="firstName" value="" placeholder="Entrez votre prénom"/>
-		<input type="text" id="lastName" name="lastName" value="" placeholder="Entrez votre prénom"/>
+		<input type="text" id="lastName" name="lastName" value="" placeholder="Entrez votre nom"/>
 	</form>
 
 </body>

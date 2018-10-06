@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+
+	<!-- persistence-unit name est très imp car il apparetra a plusieurs endroits -->
+	<persistence-unit name="projet2"
+		transaction-type="RESOURCE_LOCAL">
+
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<!-- on les a ajouté en general du persistance -->
+		
+		<class>fr.dawan.projet2.beans.Record</class>
+		<properties>
+		
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://localhost:3306/culturalevents" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.driver"
+				value="com.mysql.jdbc.Driver" />
+
+			<!-- les proprietes specifiques a Hibernate, car c'est lui le Provider, 
+				au lieu de update on peut mettre create-en fonction de besoin -->
+			<property name="hibernate.archive.autodetection"
+				value="class, hbm" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<!-- chaque base de données a son dialecte-on infrorme hibernate sur le 
+				dialecte utilisé -->
+			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+
+		</properties>
+	</persistence-unit>
+</persistence>
