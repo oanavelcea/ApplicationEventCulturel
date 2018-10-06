@@ -37,7 +37,7 @@ public class Client extends User {
 		}		
 		}
 
-	
+	//ici commentaire pour test git
 	public String getAddress() {
 		return address;
 	}
